@@ -13,6 +13,7 @@
 #include <functional>
 #include <mutex>
 #include <atomic>
+#include <cstdint>
 
 namespace Aws
 {

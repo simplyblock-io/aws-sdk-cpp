@@ -6,7 +6,6 @@
 #include <aws/core/utils/threading/PooledThreadExecutor.h>
 #include <aws/core/utils/threading/ThreadTask.h>
 #include <thread>
-#include <cstdint>
 
 static const char* POOLED_CLASS_TAG = "PooledThreadExecutor";
 

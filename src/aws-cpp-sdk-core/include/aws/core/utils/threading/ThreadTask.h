@@ -9,6 +9,7 @@
 #include <functional>
 #include <thread>
 #include <atomic>
+#include <cstdint>
 
 namespace Aws
 {
