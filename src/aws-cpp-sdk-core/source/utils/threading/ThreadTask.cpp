@@ -9,8 +9,20 @@
 using namespace Aws::Utils;
 using namespace Aws::Utils::Threading;
 
-ThreadTask::ThreadTask(PooledThreadExecutor& executor) : m_continue(true), m_executor(executor), m_thread(std::bind(&ThreadTask::MainTaskRunner, this))
+ThreadTask::ThreadTask(PooledThreadExecutor& executor, uint8_t* cpus, unsigned cpus_size) : m_continue(true), m_executor(executor), m_thread(std::bind(&ThreadTask::MainTaskRunner, this))
 {
+    if (cpus) {
+      cpu_set_t cpuset;
+      CPU_ZERO(&cpuset);
+      for (unsigned cpu = 0; cpu < cpus_size; ++cpu) {
+        if ((cpus[cpu / 8] >> (cpu % 8)) & 1U) {
+            CPU_SET(cpu, &cpuset);
+        }
+      }
+      
+      int rc = pthread_setaffinity_np(m_thread.native_handle(),
+                                      sizeof(cpu_set_t), &cpuset); (void)rc;
+    }
 }
 
 ThreadTask::~ThreadTask()

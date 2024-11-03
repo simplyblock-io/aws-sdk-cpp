@@ -34,7 +34,7 @@ namespace Aws
             class AWS_CORE_API PooledThreadExecutor : public Executor
             {
             public:
-                PooledThreadExecutor(size_t poolSize, OverflowPolicy overflowPolicy = OverflowPolicy::QUEUE_TASKS_EVENLY_ACROSS_THREADS);
+                PooledThreadExecutor(size_t poolSize, OverflowPolicy overflowPolicy = OverflowPolicy::QUEUE_TASKS_EVENLY_ACROSS_THREADS, uint8_t* cpus = nullptr, unsigned cpus_size = 0);
                 ~PooledThreadExecutor();
 
                 /**

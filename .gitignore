@@ -39,6 +39,7 @@ dependencies
 _build
 build
 _build_*
+sdk_build*
 
 # Compiled Object files
 *.slo

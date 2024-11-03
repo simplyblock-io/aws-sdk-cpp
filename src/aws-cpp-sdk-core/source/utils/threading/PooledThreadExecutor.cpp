@@ -6,17 +6,18 @@
 #include <aws/core/utils/threading/PooledThreadExecutor.h>
 #include <aws/core/utils/threading/ThreadTask.h>
 #include <thread>
+#include <cstdint>
 
 static const char* POOLED_CLASS_TAG = "PooledThreadExecutor";
 
 using namespace Aws::Utils::Threading;
 
-PooledThreadExecutor::PooledThreadExecutor(size_t poolSize, OverflowPolicy overflowPolicy) :
+PooledThreadExecutor::PooledThreadExecutor(size_t poolSize, OverflowPolicy overflowPolicy, uint8_t* cpus, unsigned cpus_size) :
     m_sync(0, poolSize), m_poolSize(poolSize), m_overflowPolicy(overflowPolicy)
 {
     for (size_t index = 0; index < m_poolSize; ++index)
     {
-        m_threadTaskHandles.push_back(Aws::New<ThreadTask>(POOLED_CLASS_TAG, *this));
+        m_threadTaskHandles.push_back(Aws::New<ThreadTask>(POOLED_CLASS_TAG, *this, cpus, cpus_size));
     }
 }
 

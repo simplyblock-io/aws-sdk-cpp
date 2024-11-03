@@ -21,7 +21,7 @@ namespace Aws
             class AWS_CORE_API ThreadTask
             {
             public:
-                ThreadTask(PooledThreadExecutor& executor);
+                ThreadTask(PooledThreadExecutor& executor, uint8_t* cpus, unsigned cpus_size);
                 ~ThreadTask();
 
                 /**
