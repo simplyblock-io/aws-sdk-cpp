@@ -11,7 +11,7 @@ static const char* POOLED_CLASS_TAG = "PooledThreadExecutor";
 
 using namespace Aws::Utils::Threading;
 
-PooledThreadExecutor::PooledThreadExecutor(size_t poolSize, OverflowPolicy overflowPolicy, uint8_t* cpus, unsigned cpus_size) :
+PooledThreadExecutor::PooledThreadExecutor(size_t poolSize, OverflowPolicy overflowPolicy, uint8_t* cpus, uint32_t cpus_size) :
     m_sync(0, poolSize), m_poolSize(poolSize), m_overflowPolicy(overflowPolicy)
 {
     cpu_set_t cpuset;
@@ -19,7 +19,7 @@ PooledThreadExecutor::PooledThreadExecutor(size_t poolSize, OverflowPolicy overf
     if (cpus) {
         pset = &cpuset;
         CPU_ZERO(&cpuset);
-        for (unsigned cpu = 0; cpu < cpus_size; ++cpu) {
+        for (uint32_t cpu = 0; cpu < cpus_size; ++cpu) {
             if ((cpus[cpu / 8] >> (cpu % 8)) & 1U) {
                 CPU_SET(cpu, &cpuset);
             }
