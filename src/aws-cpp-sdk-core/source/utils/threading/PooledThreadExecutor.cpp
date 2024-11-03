@@ -14,9 +14,21 @@ using namespace Aws::Utils::Threading;
 PooledThreadExecutor::PooledThreadExecutor(size_t poolSize, OverflowPolicy overflowPolicy, uint8_t* cpus, unsigned cpus_size) :
     m_sync(0, poolSize), m_poolSize(poolSize), m_overflowPolicy(overflowPolicy)
 {
+    cpu_set_t cpuset;
+    cpu_set_t* pset = nullptr;
+    if (cpus) {
+        pset = &cpuset;
+        CPU_ZERO(&cpuset);
+        for (unsigned cpu = 0; cpu < cpus_size; ++cpu) {
+            if ((cpus[cpu / 8] >> (cpu % 8)) & 1U) {
+                CPU_SET(cpu, &cpuset);
+            }
+        }
+    }
+
     for (size_t index = 0; index < m_poolSize; ++index)
     {
-        m_threadTaskHandles.push_back(Aws::New<ThreadTask>(POOLED_CLASS_TAG, *this, cpus, cpus_size));
+        m_threadTaskHandles.push_back(Aws::New<ThreadTask>(POOLED_CLASS_TAG, *this, pset));
     }
 }
 
