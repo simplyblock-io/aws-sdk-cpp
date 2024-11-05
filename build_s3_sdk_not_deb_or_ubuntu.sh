@@ -1,6 +1,6 @@
 cd ~/aws-sdk-cpp && mkdir -p sdk_build
 
-yes | sudo hwclock --hctosys && yes | sudo apt update && yes | sudo apt upgrade && yes | sudo apt install curl && yes | sudo apt-get install libcurl-devel openssl-devel libuuid-devel pulseaudio-libs-devel
+yes | sudo yum update && yes | sudo yum upgrade && yes | sudo yum install curl && yes | sudo yum install libcurl-devel openssl-devel libuuid-devel pulseaudio-libs-devel
 
 cd ~/aws-sdk-cpp/sdk_build && cmake ../ -DCMAKE_BUILD_TYPE=Debug -DBUILD_SHARED_LIBS=OFF -DFORCE_SHARED_CRT=OFF -DCMAKE_PREFIX_PATH=/usr/local/ -DCMAKE_INSTALL_PREFIX=/usr/local/ -DENABLE_TESTING=OFF -DBUILD_ONLY="s3"
 
