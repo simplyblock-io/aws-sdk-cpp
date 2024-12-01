@@ -5,17 +5,14 @@
 
 #include <aws/core/utils/threading/ThreadTask.h>
 #include <aws/core/utils/threading/PooledThreadExecutor.h>
-#include <pthread.h>
+#include <pthread_utils.h>
 
 using namespace Aws::Utils;
 using namespace Aws::Utils::Threading;
 
 ThreadTask::ThreadTask(PooledThreadExecutor& executor, cpu_set_t* pset) : m_continue(true), m_executor(executor), m_thread(std::bind(&ThreadTask::MainTaskRunner, this))
 {
-    if (pset) {
-      int rc = pthread_setaffinity_np(m_thread.native_handle(), sizeof(cpu_set_t), pset); 
-      (void)rc;
-    }
+    if (pset) { util_set_thread_affinity(m_thread.native_handle(), pset); }
 }
 
 ThreadTask::~ThreadTask()
