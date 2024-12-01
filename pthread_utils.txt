@@ -1,0 +1,19 @@
+#include <pthread.h>
+#include <sched.h>
+#include <cstdint>
+
+// zero-out the cpu set
+void util_cpu_zero(cpu_set_t* pset) {
+    CPU_ZERO(pset);
+}
+
+// add a cpu core to the cpu set
+void util_set_cpu(uint32_t cpu, cpu_set_t* pset) {
+    CPU_SET(cpu, pset);
+}
+
+// set the affinity of the thread
+void util_set_thread_affinity(pthread_t thr, cpu_set_t* pset) {
+    int rc = pthread_setaffinity_np(thr, sizeof(cpu_set_t), pset);
+    (void)rc;
+}

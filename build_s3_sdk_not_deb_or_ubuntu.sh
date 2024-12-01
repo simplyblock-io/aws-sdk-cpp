@@ -1,3 +1,5 @@
+cp ~/aws-sdk-cpp/pthread_utils.txt ~/aws-sdk-cpp/crt/aws-crt-cpp/include/aws/crt/pthread_utils.h
+
 cd ~/aws-sdk-cpp && mkdir -p sdk_build
 
 yes | sudo yum update && yes | sudo yum upgrade && yes | sudo yum install curl && yes | sudo yum install libcurl-devel openssl-devel libuuid-devel pulseaudio-libs-devel

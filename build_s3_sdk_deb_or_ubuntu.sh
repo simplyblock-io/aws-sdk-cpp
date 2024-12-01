@@ -1,3 +1,5 @@
+cp ~/aws-sdk-cpp/pthread_utils.txt ~/aws-sdk-cpp/crt/aws-crt-cpp/include/aws/crt/pthread_utils.h
+
 cd ~/aws-sdk-cpp && mkdir -p sdk_build
 
 yes | sudo hwclock --hctosys && yes | sudo apt update && yes | sudo apt upgrade && yes | sudo apt install curl && yes | sudo apt-get install libcurl4-openssl-dev libssl-dev uuid-dev zlib1g-dev libpulse-dev
